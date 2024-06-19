@@ -15,7 +15,10 @@ function Grid() {
           `http://${globals.ipAddress}:${globals.port}/restaurant/table/get_all`
         );
         if (response.status === 200) {
-          setTables(response.data);
+          const sortedTables = response.data.sort(
+            (a, b) => a.numberTable - b.numberTable
+          );
+          setTables(sortedTables);
           setError("");
         } else {
           setError(

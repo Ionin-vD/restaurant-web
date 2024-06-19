@@ -30,13 +30,12 @@ function InfoTable() {
           const tableData = response.data;
           setTableStatus(tableData.status);
 
-          if (tableData.status === "booked") {
+          if (tableData.status === "booked" || tableData.status === "service") {
             setBookedClient(tableData.client);
             setIsReserved(true);
-          } else if (tableData.status === "service") {
-            setBookedClient(tableData.client);
-            setIsReserved(true);
-            setIsBeingServed(true);
+            if (tableData.status === "service") {
+              setIsBeingServed(true);
+            }
           }
         } else {
           setError(
@@ -98,10 +97,29 @@ function InfoTable() {
     fetchDishes();
   }, []);
 
-  const handleAddDish = () => {
+  const handleAddDish = async () => {
     if (selectedDish) {
-      setOrderedDishes([...orderedDishes, selectedDish]);
-      setSelectedDish("");
+      try {
+        const foodIds = [selectedDish];
+        const response = await axios.put(
+          `http://${globals.ipAddress}:${globals.port}/restaurant/table/add_food?tableId=${id}`,
+          foodIds
+        );
+
+        if (response.status === 200) {
+          const dish = dishes.find(
+            (dish) => dish.id === parseInt(selectedDish)
+          );
+          setOrderedDishes([...orderedDishes, dish]);
+          setSelectedDish("");
+        } else {
+          setError(
+            "Ошибка при добавлении блюда. Пожалуйста, попробуйте позже."
+          );
+        }
+      } catch (error) {
+        setError("Ошибка при добавлении блюда. Пожалуйста, попробуйте позже.");
+      }
     }
   };
 
@@ -330,7 +348,7 @@ function InfoTable() {
               >
                 <option value="">Выберите блюдо</option>
                 {dishes.map((dish) => (
-                  <option key={dish.id} value={dish.name + " " + dish.price}>
+                  <option key={dish.id} value={dish.id}>
                     {dish.name + " " + dish.price}
                   </option>
                 ))}
@@ -349,12 +367,14 @@ function InfoTable() {
             <thead>
               <tr>
                 <th>Блюдо</th>
+                <th>Цена</th>
               </tr>
             </thead>
             <tbody>
               {orderedDishes.map((dish, index) => (
                 <tr key={index}>
-                  <td>{dish}</td>
+                  <td>{dish.name}</td>
+                  <td>{dish.price}</td>
                 </tr>
               ))}
             </tbody>

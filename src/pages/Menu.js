@@ -26,7 +26,6 @@ function Menu({ onLogout }) {
         { status: "available" }
       );
       if (response.status === 201) {
-        alert(`Столик добавлен!`);
         window.location.reload();
       } else {
         alert("Ошибка при выполнении запроса. Пожалуйста, попробуйте позже.");
@@ -41,15 +40,17 @@ function Menu({ onLogout }) {
         `http://${globals.ipAddress}:${globals.port}/restaurant/table/delete`
       );
       if (response.status === 200) {
-        alert(`Столик удален!`);
+        console.log(response.status);
         window.location.reload();
       } else if (response.status === 409) {
+        console.log(response.status);
         alert("Последний столик недоступен и не может быть удален.");
       } else {
         alert("Ошибка при выполнении запроса. Пожалуйста, попробуйте позже.");
       }
     } catch (error) {
       if (error.response && error.response.status === 409) {
+        console.log(error.response.status);
         alert("Последний столик недоступен и не может быть удален.");
       } else {
         alert("Ошибка при выполнении запроса. Пожалуйста, попробуйте позже.");
