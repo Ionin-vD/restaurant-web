@@ -1,0 +1,27 @@
+.table {
+    border: 1px solid black;
+    text-align: center;
+    padding: 20px;
+    margin: 5px;
+    border-radius: 5px;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .table_available {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .table_booked {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .table_service {
+    background-color: #ff9800;
+    color: white;
+  }
+  
