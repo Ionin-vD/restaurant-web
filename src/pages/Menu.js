@@ -22,7 +22,7 @@ function Menu({ onLogout }) {
   const addTable = async () => {
     try {
       const response = await axios.post(
-        `http://${globals.ipAddress}:${globals.port}/restaurant/table/add`,
+        `https://${globals.ipAddress}:${globals.port}/restaurant/table/add`,
         { status: "available" }
       );
       if (response.status === 201) {
@@ -37,7 +37,7 @@ function Menu({ onLogout }) {
   const delTable = async () => {
     try {
       const response = await axios.delete(
-        `http://${globals.ipAddress}:${globals.port}/restaurant/table/delete`
+        `https://${globals.ipAddress}:${globals.port}/restaurant/table/delete`
       );
       if (response.status === 200) {
         console.log(response.status);

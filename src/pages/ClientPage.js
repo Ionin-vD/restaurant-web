@@ -15,7 +15,7 @@ function Client() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://${globals.ipAddress}:${globals.port}/restaurant/client/get_all`
+          `https://${globals.ipAddress}:${globals.port}/restaurant/client/get_all`
         );
         if (response.status === 200) {
           setDatas(response.data);
@@ -45,7 +45,7 @@ function Client() {
     const client = datas[index];
     try {
       const response = await axios.put(
-        `http://${globals.ipAddress}:${globals.port}/restaurant/client/update`,
+        `https://${globals.ipAddress}:${globals.port}/restaurant/client/update`,
         client
       );
       if (response.status === 200) {
@@ -62,7 +62,7 @@ function Client() {
   const handleDelete = async (id) => {
     try {
       const response = await axios.delete(
-        `http://${globals.ipAddress}:${globals.port}/restaurant/client/delete/${id}`
+        `https://${globals.ipAddress}:${globals.port}/restaurant/client/delete/${id}`
       );
       if (response.status === 200) {
         setDatas(datas.filter((data) => data.id !== id));
@@ -78,7 +78,7 @@ function Client() {
   const handleAdd = async () => {
     try {
       const response = await axios.post(
-        `http://${globals.ipAddress}:${globals.port}/restaurant/client/add`,
+        `https://${globals.ipAddress}:${globals.port}/restaurant/client/add`,
         newClient
       );
       if (response.status === 201) {

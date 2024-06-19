@@ -15,7 +15,7 @@ function ListDishes() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://${globals.ipAddress}:${globals.port}/restaurant/food/get_all`
+          `https://${globals.ipAddress}:${globals.port}/restaurant/food/get_all`
         );
         if (response.status === 200) {
           setDatas(response.data);
@@ -45,7 +45,7 @@ function ListDishes() {
     const client = datas[index];
     try {
       const response = await axios.put(
-        `http://${globals.ipAddress}:${globals.port}/restaurant/food/update`,
+        `https://${globals.ipAddress}:${globals.port}/restaurant/food/update`,
         client
       );
       if (response.status === 200) {
@@ -62,7 +62,7 @@ function ListDishes() {
   const handleDelete = async (id) => {
     try {
       const response = await axios.delete(
-        `http://${globals.ipAddress}:${globals.port}/restaurant/food/delete/${id}`
+        `https://${globals.ipAddress}:${globals.port}/restaurant/food/delete/${id}`
       );
       if (response.status === 200) {
         setDatas(datas.filter((data) => data.id !== id));
@@ -78,7 +78,7 @@ function ListDishes() {
   const handleAdd = async () => {
     try {
       const response = await axios.post(
-        `http://${globals.ipAddress}:${globals.port}/restaurant/food/add`,
+        `https://${globals.ipAddress}:${globals.port}/restaurant/food/add`,
         newListDishes
       );
       if (response.status === 201) {
