@@ -52,6 +52,31 @@ function InfoTable() {
     fetchTableStatus();
   }, [id]);
 
+  const fetchOrderedDishes = async () => {
+    try {
+      const response = await axios.get(
+        `http://${globals.ipAddress}:${globals.port}/restaurant/table/get_ordered_dishes/${id}`
+      );
+      if (response.status === 200) {
+        setOrderedDishes(response.data);
+      } else {
+        setError(
+          "Ошибка при получении списка заказанных блюд. Пожалуйста, попробуйте позже."
+        );
+      }
+    } catch (error) {
+      setError(
+        "Ошибка при получении списка заказанных блюд. Пожалуйста, попробуйте позже."
+      );
+    }
+  };
+
+  useEffect(() => {
+    if (tableStatus === "service") {
+      fetchOrderedDishes();
+    }
+  }, [tableStatus]);
+
   useEffect(() => {
     const fetchClients = async () => {
       try {
@@ -205,6 +230,7 @@ function InfoTable() {
 
         if (tableResponse.status === 200) {
           setIsBeingServed(true);
+          fetchOrderedDishes();
         } else {
           setError(
             "Не удалось начать обслуживать столик. Пожалуйста, попробуйте позже."
