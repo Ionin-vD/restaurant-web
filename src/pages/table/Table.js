@@ -2,11 +2,11 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../../css/Table.css"; // Import CSS file for styling
 
-function Table({ number, status }) {
+function Table({ id, number, status }) {
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
-    navigate(`/InfoTable/${number}`);
+    navigate(`/InfoTable/${id}/${number}`);
   };
 
   let tableClass;

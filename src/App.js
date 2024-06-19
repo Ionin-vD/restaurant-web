@@ -92,7 +92,7 @@ function App() {
             <Route path="/Grid" element={<Grid />} />
             {/* <Route path="/SubReservation" element={<AddTable />} />
             <Route path="/DelReservation" element={<DelTable />} /> */}
-            <Route path="/InfoTable/:number" element={<InfoTable />} />
+            <Route path="/InfoTable/:id/:number" element={<InfoTable />} />
           </Routes>
         </div>
       </div>

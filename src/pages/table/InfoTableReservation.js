@@ -5,7 +5,7 @@ import { globals } from "../../config";
 import "../../css/InfoTable.css";
 
 function InfoTable() {
-  const { number } = useParams();
+  const { id, number } = useParams();
 
   const [selectedClient, setSelectedClient] = useState("");
   const [customClient, setCustomClient] = useState("");
@@ -17,6 +17,41 @@ function InfoTable() {
   const [error, setError] = useState("");
   const [isReserved, setIsReserved] = useState(false);
   const [isBeingServed, setIsBeingServed] = useState(false);
+  const [tableStatus, setTableStatus] = useState(null);
+  const [bookedClient, setBookedClient] = useState(null);
+
+  useEffect(() => {
+    const fetchTableStatus = async () => {
+      try {
+        const response = await axios.get(
+          `http://${globals.ipAddress}:${globals.port}/restaurant/table/get_id/${id}`
+        );
+        if (response.status === 200) {
+          const tableData = response.data;
+          setTableStatus(tableData.status);
+
+          if (tableData.status === "booked") {
+            setBookedClient(tableData.client);
+            setIsReserved(true);
+          } else if (tableData.status === "service") {
+            setBookedClient(tableData.client);
+            setIsReserved(true);
+            setIsBeingServed(true);
+          }
+        } else {
+          setError(
+            "Ошибка при выполнении запроса. Пожалуйста, попробуйте позже."
+          );
+        }
+      } catch (error) {
+        setError(
+          "Ошибка при выполнении запроса. Пожалуйста, попробуйте позже."
+        );
+      }
+    };
+
+    fetchTableStatus();
+  }, [id]);
 
   useEffect(() => {
     const fetchClients = async () => {
@@ -100,7 +135,7 @@ function InfoTable() {
           customClient ||
           clients.find((client) => client.id === parseInt(selectedClient))
             ?.nameAndSerName;
-        alert(`Столик ${number} забронирован для ${clientName}`);
+        window.location.reload();
         setIsReserved(true);
       } else {
         setError(
@@ -112,40 +147,100 @@ function InfoTable() {
     }
   };
 
-  const handleCancelReservation = () => {
-    if (!isBeingServed) {
-      setIsReserved(false);
-      setSelectedClient("");
-      setCustomClient("");
-      setCustomPhoneNumber("");
-      setOrderedDishes([]);
-    } else {
-      alert(
-        "Невозможно отменить бронь, когда столик находится в обслуживании."
-      );
+  const handleCancelReservation = async () => {
+    try {
+      if (!isBeingServed) {
+        const tableResponse = await axios.put(
+          `http://${globals.ipAddress}:${globals.port}/restaurant/table/update_book`,
+          { id: id, status: "available" }
+        );
+
+        if (tableResponse.status === 200) {
+          setIsReserved(false);
+          setSelectedClient("");
+          setCustomClient("");
+          setCustomPhoneNumber("");
+          setOrderedDishes([]);
+          window.location.reload();
+        } else {
+          setError(
+            "Не удалось обновить данные столика. Пожалуйста, попробуйте позже."
+          );
+        }
+      } else {
+        alert(
+          "Невозможно отменить бронь, когда столик находится в обслуживании."
+        );
+      }
+    } catch (error) {
+      setError("Ошибка при выполнении запроса. Пожалуйста, попробуйте позже.");
     }
   };
 
-  const handleStartServing = () => {
-    setIsBeingServed(true);
-    alert(`Обслуживание клиента за столиком ${number} началось`);
+  const handleStartServing = async () => {
+    try {
+      if (!isBeingServed) {
+        const tableResponse = await axios.put(
+          `http://${globals.ipAddress}:${globals.port}/restaurant/table/update_book`,
+          { id: id, status: "service" }
+        );
+
+        if (tableResponse.status === 200) {
+          setIsBeingServed(true);
+        } else {
+          setError(
+            "Не удалось начать обслуживать столик. Пожалуйста, попробуйте позже."
+          );
+        }
+      } else {
+        setError(
+          "Ошибка при выполнении запроса. Пожалуйста, попробуйте позже."
+        );
+      }
+    } catch (error) {
+      setError("Ошибка при выполнении запроса. Пожалуйста, попробуйте позже.");
+    }
   };
 
-  const handlePrintBill = () => {
-    alert("Чек напечатан!");
-    setIsReserved(false);
-    setIsBeingServed(false);
-    setSelectedClient("");
-    setCustomClient("");
-    setCustomPhoneNumber("");
-    setOrderedDishes([]);
+  const handlePrintBill = async () => {
+    try {
+      if (isReserved) {
+        const tableResponse = await axios.put(
+          `http://${globals.ipAddress}:${globals.port}/restaurant/table/update_book`,
+          { id: id, status: "available" }
+        );
+
+        if (tableResponse.status === 200) {
+          alert("Чек напечатан!");
+          setIsReserved(false);
+          setIsBeingServed(false);
+          setSelectedClient("");
+          setCustomClient("");
+          setCustomPhoneNumber("");
+          setOrderedDishes([]);
+          window.location.reload();
+        } else {
+          setError("Не удалось напечатать чек. Пожалуйста, попробуйте позже.");
+        }
+      } else {
+        setError(
+          "Ошибка при выполнении запроса. Пожалуйста, попробуйте позже."
+        );
+      }
+    } catch (error) {
+      setError("Ошибка при выполнении запроса. Пожалуйста, попробуйте позже.");
+    }
   };
+
+  if (tableStatus === null) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="info-table">
       <h1>Столик {number}</h1>
 
-      {!isReserved ? (
+      {tableStatus === "available" && !isReserved ? (
         <button
           onClick={handleReserveTable}
           className="btn"
@@ -155,6 +250,10 @@ function InfoTable() {
         </button>
       ) : (
         <>
+          <p>
+            Забронировано для{" "}
+            {bookedClient?.nameAndSerName + " " + bookedClient?.phoneNumber}
+          </p>
           {!isBeingServed && (
             <button onClick={handleCancelReservation} className="btn">
               Отменить бронь
@@ -174,7 +273,8 @@ function InfoTable() {
           )}
         </>
       )}
-      {!isBeingServed && (
+
+      {tableStatus === "available" && !isBeingServed && (
         <>
           <div className="form-group">
             <label>
@@ -216,6 +316,7 @@ function InfoTable() {
           </div>
         </>
       )}
+
       {isBeingServed && (
         <>
           <div className="form-group">

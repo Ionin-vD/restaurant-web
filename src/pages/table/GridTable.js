@@ -39,6 +39,7 @@ function Grid() {
         {tables.map((table) => (
           <Table
             key={table.id}
+            id={table.id}
             number={table.numberTable}
             status={table.status}
           />
