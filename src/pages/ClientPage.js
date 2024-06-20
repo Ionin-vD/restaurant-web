@@ -119,21 +119,22 @@ function Client() {
   };
 
   return (
-    <div>
+    <div className="container">
       <div className="rating-container">
         <h2 className="h2-auth-text">Клиенты</h2>
         <div className="table-wrapper">
           <div className="table-header">
             <div className="row">
-              <div>номер клиента</div>
-              <div>фамилия и имя</div>
-              <div>номер телефона</div>
+              <div className="text">Номер клиента</div>
+              <div className="text">Фамилия и имя</div>
+              <div className="text">Номер телефона</div>
+              <div className="text">Действия</div>
             </div>
           </div>
           <div className="table-body">
             {datas.map((rating, index) => (
               <div className="row" key={index}>
-                <div>{rating.id}</div>
+                <div className="inStyle">{rating.id}</div>
                 <input
                   type="text"
                   value={rating.nameAndSerName}
@@ -149,7 +150,9 @@ function Client() {
                   }
                 />
                 <div>
-                  <button onClick={() => handleSave(index)}>Сохранить</button>
+                  <button className="butDiv" onClick={() => handleSave(index)}>
+                    Сохранить
+                  </button>
                   <button onClick={() => handleDelete(rating.id)}>
                     Удалить
                   </button>

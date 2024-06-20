@@ -4,8 +4,9 @@
     font-family: Arial, sans-serif;
     background-color: #f9f9f9;
     padding: 20px;
+    margin: 10px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   }
   
   .info-table h1 {
@@ -84,4 +85,89 @@
     font-size: 14px;
     margin-top: 20px;
     text-align: center;
+  }
+  .text{
+    color: black;
+  }
+  
+  /* .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px;
+  } */
+  
+  h2.h2-auth-text {
+    text-align: center;
+    color: #007bff;
+    margin-bottom: 20px;
+  }
+
+  h1.h2-auth-text {
+    text-align: center;
+    color: #007bff;
+    margin-bottom: 20px;
+  }
+  
+  .rating-container {
+    width: 60%;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .table-wrapper {
+    height: 350px; /* Высота таблицы */
+    overflow-y: auto; /* Включаем вертикальную прокрутку */
+    overflow-x: hidden; /* Отключаем горизонтальную прокрутку */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    padding-left: 12px;
+  }
+  
+  .table-header {
+    position: sticky;
+    top: 0;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 10px 10px 0 0; /* Скругляем только верхние края таблицы */
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1); /* Тень для заголовка */
+  }
+  
+  .row {
+    display: flex;
+    align-items: center;
+  }
+  
+  .row > div, .row > input {
+    flex: 1;
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    box-sizing: border-box;
+  }
+  
+  .row > div {
+    background-color: #f9f9f9;
+  }
+  
+  .row:nth-child(even) {
+    background-color: rgba(0, 123, 255, 0.1); /* Цвет для четных строк */
+  }
+  
+  .row:nth-child(odd) {
+    background-color: #fff; /* Цвет для нечетных строк */
+  }
+  
+  .table-body > .row:last-child > div {
+    border-bottom: none; /* Убираем нижнюю границу для последней строки тела таблицы */
+  }
+  .inStyle{
+    padding: 6px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 10px;
+    box-sizing: border-box;
   }

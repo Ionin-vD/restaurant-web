@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "../../src/css/GridClient.css";
+import "../../src/css/GridPersonal.css";
 import { globals } from "../config";
 
 function Personal() {
@@ -123,24 +123,24 @@ function Personal() {
   };
 
   return (
-    <div>
+    <div className="container">
       <div className="rating-container">
         <h2 className="h2-auth-text">Персонал</h2>
         <div className="table-wrapper">
           <div className="table-header">
             <div className="row">
-              <div>номер персонала</div>
-              <div>фамилия и имя</div>
-              <div>логин</div>
-              <div>пароль</div>
-              <div>роль</div>
-              <div>телефон</div>
+              <div className="text">Номер персонала</div>
+              <div className="text">Фамилия и имя</div>
+              <div className="text">Логин</div>
+              <div className="text">Пароль</div>
+              <div className="text">Роль</div>
+              <div className="text">Действия</div>
             </div>
           </div>
           <div className="table-body">
             {datas.map((rating, index) => (
               <div className="row" key={index}>
-                <div>{rating.id}</div>
+                <div className="inStyle">{rating.id}</div>
                 <input
                   type="text"
                   value={rating.nameAndSerName}
@@ -162,6 +162,7 @@ function Personal() {
                     handleInputChange(index, "password", e.target.value)
                   }
                 />
+
                 <select
                   value={rating.role}
                   onChange={(e) =>
@@ -172,7 +173,9 @@ function Personal() {
                   <option value="waiter">waiter</option>
                 </select>
                 <div>
-                  <button onClick={() => handleSave(index)}>Сохранить</button>
+                  <button className="butDiv" onClick={() => handleSave(index)}>
+                    Сохранить
+                  </button>
                   <button onClick={() => handleDelete(rating.id)}>
                     Удалить
                   </button>
@@ -200,7 +203,7 @@ function Personal() {
             }
           />
           <input
-            type="password"
+            type="text"
             placeholder="Пароль"
             value={newPersonal.password}
             onChange={(e) =>

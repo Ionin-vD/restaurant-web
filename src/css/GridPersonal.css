@@ -5,14 +5,11 @@ body {
   margin: 0;
   padding: 0;
 }
-.text{
-  color: black;
-}
 
 .container {
   max-width: 2000px;
   margin: 0 auto;
-  padding: 10px;
+  padding: 20px;
 }
 
 h2.h2-auth-text {
@@ -31,7 +28,7 @@ h2.h2-auth-text {
 }
 
 .table-wrapper {
-  height: 450px; /* Высота таблицы */
+  height: 350px; /* Высота таблицы */
   overflow-y: auto; /* Включаем вертикальную прокрутку */
   overflow-x: hidden; /* Отключаем горизонтальную прокрутку */
   border-radius: 10px;
@@ -54,7 +51,9 @@ h2.h2-auth-text {
   align-items: center;
 }
 
-.row > div, .row > input {
+.row > div,
+.row > input,
+.row > select {
   flex: 1;
   border: 1px solid #ddd;
   padding: 10px;
@@ -74,7 +73,7 @@ h2.h2-auth-text {
   background-color: #fff; /* Цвет для нечетных строк */
 }
 
-.table-body > .row:last-child > div {
+.table-body > .row > div {
   border-bottom: none; /* Убираем нижнюю границу для последней строки тела таблицы */
 }
 
@@ -88,8 +87,8 @@ button {
   transition: background-color 0.3s ease;
 }
 
-.butDiv{
-  margin-right: 5px;
+.butDiv {
+  margin-bottom: 5px;
 }
 
 button:hover {
@@ -110,6 +109,16 @@ button:hover {
 }
 
 .add-personal input {
+  width: calc(50% - 10px);
+  padding: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.add-personal select {
   width: calc(50% - 10px);
   padding: 10px;
   margin-right: 10px;
@@ -145,15 +154,7 @@ button:hover {
   text-align: center;
 }
 
-input[type="text"] {
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  margin-right: 5px;
-  box-sizing: border-box;
-}
-
-.inStyle{
+.inStyle {
   padding: 6px;
   border: 1px solid #ddd;
   border-radius: 5px;

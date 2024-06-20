@@ -59,56 +59,48 @@ function Menu({ onLogout }) {
   };
 
   return (
-    <>
-      <div className="Menu">
-        <Link to="/" onClick={() => handleMenuItemClick("home")}>
-          Главная
-        </Link>
-        <Link
-          to="/Preservation_Table"
-          onClick={() => handleMenuItemClick("reservation")}
-        >
-          Бронь стола
-        </Link>
-        {userRole === "waiter" ? null : (
-          <>
-            {activeMenuItem === "reservation" && (
-              <div className="SubMenu">
-                <Link to="/Preservation_Table" onClick={() => addTable()}>
-                  Добавить стол
-                </Link>
-                <Link to="/Preservation_Table" onClick={() => delTable()}>
-                  Удалить стол
-                </Link>
-              </div>
-            )}
-          </>
-        )}
-        <Link to="/Client" onClick={() => handleMenuItemClick("clients")}>
-          Клиенты
-        </Link>
+    <div className="Menu">
+      <Link to="/" onClick={() => handleMenuItemClick("home")}>
+        Главная
+      </Link>
+      <Link
+        to="/Preservation_Table"
+        onClick={() => handleMenuItemClick("reservation")}
+      >
+        Бронь стола
+      </Link>
+      {userRole === "waiter" ? null : (
+        <>
+          {activeMenuItem === "reservation" && (
+            <div className="SubMenu">
+              <Link to="/Preservation_Table" onClick={() => addTable()}>
+                Добавить стол
+              </Link>
+              <Link to="/Preservation_Table" onClick={() => delTable()}>
+                Удалить стол
+              </Link>
+            </div>
+          )}
+        </>
+      )}
+      <Link to="/Client" onClick={() => handleMenuItemClick("clients")}>
+        Клиенты
+      </Link>
 
-        {userRole === "waiter" ? null : (
-          <>
-            <Link
-              to="/Personal"
-              onClick={() => handleMenuItemClick("personal")}
-            >
-              Персонал
-            </Link>
-            <Link
-              to="/List_Dishes"
-              onClick={() => handleMenuItemClick("dishes")}
-            >
-              Список блюд
-            </Link>
-          </>
-        )}
-        <Link to="/Login" id="But_Exit" onClick={onLogout}>
-          Выйти
-        </Link>
-      </div>
-    </>
+      {userRole === "waiter" ? null : (
+        <>
+          <Link to="/Personal" onClick={() => handleMenuItemClick("personal")}>
+            Персонал
+          </Link>
+          <Link to="/List_Dishes" onClick={() => handleMenuItemClick("dishes")}>
+            Список блюд
+          </Link>
+        </>
+      )}
+      <Link to="/Login" id="But_Exit" onClick={onLogout}>
+        Выйти
+      </Link>
+    </div>
   );
 }
 

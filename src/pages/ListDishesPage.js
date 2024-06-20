@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "../../src/css/GridClient.css";
+import "../../src/css/GridListDishes.css";
 import { globals } from "../config";
 
 function ListDishes() {
@@ -120,15 +120,16 @@ function ListDishes() {
         <div className="table-wrapper">
           <div className="table-header">
             <div className="row">
-              <div>номер блюда</div>
-              <div>название</div>
-              <div>цена</div>
+              <div className="text">Номер блюда</div>
+              <div className="text">Название</div>
+              <div className="text">Цена</div>
+              <div className="text">Действия</div>
             </div>
           </div>
           <div className="table-body">
             {datas.map((rating, index) => (
               <div className="row" key={index}>
-                <div>{rating.id}</div>
+                <div className="inStyle">{rating.id}</div>
                 <input
                   type="text"
                   value={rating.name}
@@ -144,7 +145,9 @@ function ListDishes() {
                   }
                 />
                 <div>
-                  <button onClick={() => handleSave(index)}>Сохранить</button>
+                  <button className="butDiv" onClick={() => handleSave(index)}>
+                    Сохранить
+                  </button>
                   <button onClick={() => handleDelete(rating.id)}>
                     Удалить
                   </button>

@@ -282,7 +282,7 @@ function InfoTable() {
 
   return (
     <div className="info-table">
-      <h1>Столик {number}</h1>
+      <h1 className="h2-auth-text">Столик {number}</h1>
 
       {tableStatus === "available" && !isReserved ? (
         <button
@@ -389,7 +389,7 @@ function InfoTable() {
             </button>
           </div>
 
-          <table className="table">
+          {/* <table className="table">
             <thead>
               <tr>
                 <th>Блюдо</th>
@@ -404,7 +404,24 @@ function InfoTable() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </table> */}
+          <h2 className="h2-auth-text">Блюда</h2>
+          <div className="table-wrapper">
+            <div className="table-header">
+              <div className="row">
+                <div className="text">Название блюда</div>
+                <div className="text">Цена</div>
+              </div>
+            </div>
+            <div className="table-body">
+              {orderedDishes.map((dish, index) => (
+                <div className="row" key={index}>
+                  <div className="inStyle">{dish.name}</div>
+                  <div className="inStyle">{dish.price}</div>
+                </div>
+              ))}
+            </div>
+          </div>
         </>
       )}
 
