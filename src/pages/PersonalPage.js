@@ -43,15 +43,31 @@ function Personal() {
     setDatas(updatedDatas);
   };
 
+  const validateFields = (personal) => {
+    if (
+      !personal.nameAndSerName ||
+      !personal.login ||
+      !personal.password ||
+      !personal.role
+    ) {
+      return "Все поля должны быть заполнены.";
+    }
+    return null;
+  };
+
   const handleSave = async (index) => {
     const personal = datas[index];
+    const validationError = validateFields(personal);
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
     try {
       const response = await axios.put(
         `http://${globals.ipAddress}:${globals.port}/restaurant/personal/update`,
         personal
       );
       if (response.status === 200) {
-        // Обработка успешного обновления
         setError("Успешно сохранено.");
       } else {
         setError("Не удалось сохранить изменения.");
@@ -66,7 +82,7 @@ function Personal() {
       const response = await axios.delete(
         `http://${globals.ipAddress}:${globals.port}/restaurant/personal/delete/${id}`
       );
-      if (response.status === 200) {
+      if (response.status === 204) {
         setDatas(datas.filter((rating) => rating.id !== id));
         setError("");
       } else {
@@ -78,6 +94,11 @@ function Personal() {
   };
 
   const handleAdd = async () => {
+    const validationError = validateFields(newPersonal);
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
     try {
       const response = await axios.post(
         `http://${globals.ipAddress}:${globals.port}/restaurant/personal/add`,
@@ -90,6 +111,7 @@ function Personal() {
           login: "",
           password: "",
           role: "waiter",
+          phone: "",
         });
         setError("");
       } else {
@@ -112,6 +134,7 @@ function Personal() {
               <div>логин</div>
               <div>пароль</div>
               <div>роль</div>
+              <div>телефон</div>
             </div>
           </div>
           <div className="table-body">
@@ -133,19 +156,21 @@ function Personal() {
                   }
                 />
                 <input
-                  type="text"
+                  type="password"
                   value={rating.password}
                   onChange={(e) =>
                     handleInputChange(index, "password", e.target.value)
                   }
                 />
-                <input
-                  type="text"
+                <select
                   value={rating.role}
                   onChange={(e) =>
                     handleInputChange(index, "role", e.target.value)
                   }
-                />
+                >
+                  <option value="admin">admin</option>
+                  <option value="waiter">waiter</option>
+                </select>
                 <div>
                   <button onClick={() => handleSave(index)}>Сохранить</button>
                   <button onClick={() => handleDelete(rating.id)}>
@@ -175,7 +200,7 @@ function Personal() {
             }
           />
           <input
-            type="text"
+            type="password"
             placeholder="Пароль"
             value={newPersonal.password}
             onChange={(e) =>

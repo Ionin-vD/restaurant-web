@@ -43,6 +43,11 @@ function Client() {
 
   const handleSave = async (index) => {
     const client = datas[index];
+    const validationError = validateFields(client);
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
     try {
       const response = await axios.put(
         `http://${globals.ipAddress}:${globals.port}/restaurant/client/update`,
@@ -64,10 +69,11 @@ function Client() {
       const response = await axios.delete(
         `http://${globals.ipAddress}:${globals.port}/restaurant/client/delete/${id}`
       );
-      if (response.status === 200) {
+      if (response.status === 204) {
         setDatas(datas.filter((data) => data.id !== id));
         setError("");
       } else {
+        console.log(response.status);
         setError("Не удалось удалить запись.");
       }
     } catch (error) {
@@ -76,6 +82,11 @@ function Client() {
   };
 
   const handleAdd = async () => {
+    const validationError = validateFields(newClient);
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
     try {
       const response = await axios.post(
         `http://${globals.ipAddress}:${globals.port}/restaurant/client/add`,
@@ -94,6 +105,17 @@ function Client() {
     } catch (error) {
       setError("Ошибка при выполнении запроса. Пожалуйста, попробуйте позже.");
     }
+  };
+
+  const validateFields = (client) => {
+    if (!client.nameAndSerName || !client.phoneNumber) {
+      return "Все поля должны быть заполнены.";
+    }
+    const phoneRegex = /^\+?[1-9]\d{1,14}$/;
+    if (!phoneRegex.test(client.phoneNumber)) {
+      return "Введите корректный номер телефона.";
+    }
+    return null;
   };
 
   return (

@@ -42,11 +42,16 @@ function ListDishes() {
   };
 
   const handleSave = async (index) => {
-    const client = datas[index];
+    const food = datas[index];
+    const validationError = validateFields(food);
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
     try {
       const response = await axios.put(
         `http://${globals.ipAddress}:${globals.port}/restaurant/food/update`,
-        client
+        food
       );
       if (response.status === 200) {
         // Обработка успешного обновления
@@ -64,7 +69,7 @@ function ListDishes() {
       const response = await axios.delete(
         `http://${globals.ipAddress}:${globals.port}/restaurant/food/delete/${id}`
       );
-      if (response.status === 200) {
+      if (response.status === 204) {
         setDatas(datas.filter((data) => data.id !== id));
         setError("");
       } else {
@@ -76,6 +81,11 @@ function ListDishes() {
   };
 
   const handleAdd = async () => {
+    const validationError = validateFields(newListDishes);
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
     try {
       const response = await axios.post(
         `http://${globals.ipAddress}:${globals.port}/restaurant/food/add`,
@@ -89,11 +99,18 @@ function ListDishes() {
         });
         setError("");
       } else {
-        setError("Не удалось добавить клиента.");
+        setError("Не удалось добавить блюдо.");
       }
     } catch (error) {
       setError("Ошибка при выполнении запроса. Пожалуйста, попробуйте позже.");
     }
+  };
+
+  const validateFields = (listDishes) => {
+    if (!listDishes.name || !listDishes.price) {
+      return "Все поля должны быть заполнены.";
+    }
+    return null;
   };
 
   return (
@@ -150,7 +167,7 @@ function ListDishes() {
             }
           />
           <input
-            type="text"
+            type="number"
             placeholder="Цена"
             value={newListDishes.price}
             onChange={(e) =>
