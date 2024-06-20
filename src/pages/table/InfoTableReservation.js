@@ -24,7 +24,7 @@ function InfoTable() {
     const fetchTableStatus = async () => {
       try {
         const response = await axios.get(
-          `https://${globals.ipAddress}:${globals.port}/restaurant/table/get_id/${id}`
+          `http://${globals.ipAddress}:${globals.port}/restaurant/table/get_id/${id}`
         );
         if (response.status === 200) {
           const tableData = response.data;
@@ -55,7 +55,7 @@ function InfoTable() {
   const fetchOrderedDishes = async () => {
     try {
       const response = await axios.get(
-        `https://${globals.ipAddress}:${globals.port}/restaurant/table/get_ordered_dishes/${id}`
+        `http://${globals.ipAddress}:${globals.port}/restaurant/table/get_ordered_dishes/${id}`
       );
       if (response.status === 200) {
         setOrderedDishes(response.data);
@@ -81,7 +81,7 @@ function InfoTable() {
     const fetchClients = async () => {
       try {
         const response = await axios.get(
-          `https://${globals.ipAddress}:${globals.port}/restaurant/client/get_all`
+          `http://${globals.ipAddress}:${globals.port}/restaurant/client/get_all`
         );
         if (response.status === 200) {
           setClients(response.data);
@@ -101,7 +101,7 @@ function InfoTable() {
     const fetchDishes = async () => {
       try {
         const response = await axios.get(
-          `https://${globals.ipAddress}:${globals.port}/restaurant/food/get_all`
+          `http://${globals.ipAddress}:${globals.port}/restaurant/food/get_all`
         );
         if (response.status === 200) {
           setDishes(response.data);
@@ -127,7 +127,7 @@ function InfoTable() {
       try {
         const foodIds = [selectedDish];
         const response = await axios.put(
-          `https://${globals.ipAddress}:${globals.port}/restaurant/table/add_food?tableId=${id}`,
+          `http://${globals.ipAddress}:${globals.port}/restaurant/table/add_food?tableId=${id}`,
           foodIds
         );
 
@@ -154,7 +154,7 @@ function InfoTable() {
 
       if (!clientId && customClient && customPhoneNumber) {
         const clientResponse = await axios.post(
-          `https://${globals.ipAddress}:${globals.port}/restaurant/client/add`,
+          `http://${globals.ipAddress}:${globals.port}/restaurant/client/add`,
           { nameAndSerName: customClient, phoneNumber: customPhoneNumber }
         );
         if (clientResponse.status === 201) {
@@ -166,7 +166,7 @@ function InfoTable() {
       }
 
       const tableResponse = await axios.put(
-        `https://${globals.ipAddress}:${globals.port}/restaurant/table/book`,
+        `http://${globals.ipAddress}:${globals.port}/restaurant/table/book`,
         {
           numberTable: number,
           clientId,
@@ -194,7 +194,7 @@ function InfoTable() {
     try {
       if (!isBeingServed) {
         const tableResponse = await axios.put(
-          `https://${globals.ipAddress}:${globals.port}/restaurant/table/update_book`,
+          `http://${globals.ipAddress}:${globals.port}/restaurant/table/update_book`,
           { id: id, status: "available" }
         );
 
@@ -224,7 +224,7 @@ function InfoTable() {
     try {
       if (!isBeingServed) {
         const tableResponse = await axios.put(
-          `https://${globals.ipAddress}:${globals.port}/restaurant/table/update_book`,
+          `http://${globals.ipAddress}:${globals.port}/restaurant/table/update_book`,
           { id: id, status: "service" }
         );
 
@@ -250,7 +250,7 @@ function InfoTable() {
     try {
       if (isReserved) {
         const tableResponse = await axios.put(
-          `https://${globals.ipAddress}:${globals.port}/restaurant/table/update_book`,
+          `http://${globals.ipAddress}:${globals.port}/restaurant/table/update_book`,
           { id: id, status: "available" }
         );
 

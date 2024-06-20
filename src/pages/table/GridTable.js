@@ -12,7 +12,7 @@ function Grid() {
     const fetchTables = async () => {
       try {
         const response = await axios.get(
-          `https://${globals.ipAddress}:${globals.port}/restaurant/table/get_all`
+          `http://${globals.ipAddress}:${globals.port}/restaurant/table/get_all`
         );
         if (response.status === 200) {
           const sortedTables = response.data.sort(

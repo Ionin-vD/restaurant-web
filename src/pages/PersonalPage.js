@@ -17,7 +17,7 @@ function Personal() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://${globals.ipAddress}:${globals.port}/restaurant/personal/get_all`
+          `http://${globals.ipAddress}:${globals.port}/restaurant/personal/get_all`
         );
         if (response.status === 200) {
           setDatas(response.data);
@@ -47,7 +47,7 @@ function Personal() {
     const personal = datas[index];
     try {
       const response = await axios.put(
-        `https://${globals.ipAddress}:${globals.port}/restaurant/personal/update`,
+        `http://${globals.ipAddress}:${globals.port}/restaurant/personal/update`,
         personal
       );
       if (response.status === 200) {
@@ -64,7 +64,7 @@ function Personal() {
   const handleDelete = async (id) => {
     try {
       const response = await axios.delete(
-        `https://${globals.ipAddress}:${globals.port}/restaurant/personal/delete/${id}`
+        `http://${globals.ipAddress}:${globals.port}/restaurant/personal/delete/${id}`
       );
       if (response.status === 200) {
         setDatas(datas.filter((rating) => rating.id !== id));
@@ -80,7 +80,7 @@ function Personal() {
   const handleAdd = async () => {
     try {
       const response = await axios.post(
-        `https://${globals.ipAddress}:${globals.port}/restaurant/personal/add`,
+        `http://${globals.ipAddress}:${globals.port}/restaurant/personal/add`,
         newPersonal
       );
       if (response.status === 201) {

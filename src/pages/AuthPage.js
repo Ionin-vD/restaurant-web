@@ -13,7 +13,7 @@ function Login({ onLogin }) {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `https://${globals.ipAddress}:${globals.port}/restaurant/personal/check_login`,
+        `http://${globals.ipAddress}:${globals.port}/restaurant/personal/check_login`,
         { login, password }
       );
       if (response.status === 200) {
